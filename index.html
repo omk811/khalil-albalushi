@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة ارتقِ | اللغة العربية - الصف الخامس</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold:   #C9922A;
+      --gold2:  #F0C060;
+      --deep:   #0B1626;
+      --navy:   #112240;
+      --navy2:  #1A3158;
+      --teal:   #0F7173;
+      --teal2:  #14A09E;
+      --cream:  #FDF6E3;
+      --white:  #FFFFFF;
+      --glass:  rgba(255,255,255,0.06);
+      --glass2: rgba(255,255,255,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      background-color: var(--deep);
+      color: var(--white);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ═══════════════ NOISE TEXTURE OVERLAY ═══════════════ */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    /* ═══════════════ ANIMATED BG ORBS ═══════════════ */
+    .orb {
+      position: fixed; border-radius: 50%;
+      filter: blur(90px); pointer-events: none; z-index: 0;
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 500px; height: 500px; top: -150px; right: -100px; background: radial-gradient(circle, rgba(12,113,115,0.35) 0%, transparent 70%); animation-delay: 0s; }
+    .orb-2 { width: 400px; height: 400px; bottom: -100px; left: -80px;  background: radial-gradient(circle, rgba(201,146,42,0.25) 0%, transparent 70%); animation-delay: -6s; }
+    .orb-3 { width: 300px; height: 300px; top: 40%; left: 35%;          background: radial-gradient(circle, rgba(26,49,88,0.6) 0%, transparent 70%);  animation-delay: -12s; }
+
+    @keyframes drift {
+      0%   { transform: translate(0,0) scale(1); }
+      50%  { transform: translate(30px,20px) scale(1.05); }
+      100% { transform: translate(-20px,40px) scale(0.97); }
+    }
+
+    /* ═══════════════ LAYOUT ═══════════════ */
+    .container { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ═══════════════ HEADER / HERO ═══════════════ */
+    header {
+      position: relative; z-index: 1;
+      padding: 3.5rem 1.5rem 0;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.8rem; font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--gold2);
+      background: rgba(201,146,42,0.12);
+      border: 1px solid rgba(201,146,42,0.35);
+      border-radius: 50px;
+      padding: 0.35rem 1.2rem;
+      margin-bottom: 1.6rem;
+      animation: fadeSlideDown 0.8s ease both;
+    }
+
+    .hero-logo {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--navy2) 100%);
+      box-shadow: 0 0 0 8px rgba(15,113,115,0.15), 0 0 60px rgba(15,113,115,0.3);
+      margin-bottom: 1.6rem;
+      animation: fadeSlideDown 0.8s ease 0.1s both;
+    }
+
+    .hero-logo svg { width: 48px; height: 48px; fill: var(--gold2); }
+
+    .hero-title {
+      font-family: 'Amiri', serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 0.4rem;
+      animation: fadeSlideDown 0.8s ease 0.2s both;
+      background: linear-gradient(135deg, #FFFFFF 20%, var(--gold2) 60%, var(--teal2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-family: 'Tajawal', sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 2.4rem;
+      animation: fadeSlideDown 0.8s ease 0.3s both;
+    }
+
+    /* ═══════════════ DIVIDER ═══════════════ */
+    .ornament {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.8rem; margin: 0 auto 2.8rem;
+      max-width: 340px;
+      animation: fadeSlideDown 0.8s ease 0.4s both;
+    }
+    .ornament-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,146,42,0.5), transparent); }
+    .ornament-diamond { width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); }
+    .ornament-text { font-family: 'Amiri', serif; font-size: 1rem; color: var(--gold2); white-space: nowrap; }
+
+    /* ═══════════════ ABOUT CARD ═══════════════ */
+    .about-card {
+      position: relative; z-index: 1;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 2.2rem 2.5rem;
+      margin-bottom: 3rem;
+      animation: fadeSlideUp 0.9s ease 0.5s both;
+      overflow: hidden;
+    }
+
+    .about-card::before {
+      content: ''; position: absolute;
+      top: 0; right: 0; left: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--teal2), transparent);
+    }
+
+    .about-card::after {
+      content: '"'; position: absolute;
+      bottom: -1.5rem; left: 1.5rem;
+      font-family: 'Amiri', serif; font-size: 12rem;
+      color: rgba(201,146,42,0.05); line-height: 1;
+      pointer-events: none;
+    }
+
+    .about-title {
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--gold2); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+
+    .about-title::before {
+      content: ''; display: inline-block;
+      width: 28px; height: 2px; background: var(--gold);
+    }
+
+    .about-text {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.05rem; font-weight: 400;
+      line-height: 2.1;
+      color: rgba(255,255,255,0.82);
+    }
+
+    .about-highlights {
+      display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.5rem;
+    }
+
+    .highlight-tag {
+      font-size: 0.82rem; font-weight: 600;
+      padding: 0.3rem 0.9rem; border-radius: 50px;
+      background: rgba(15,113,115,0.2);
+      border: 1px solid rgba(20,160,158,0.3);
+      color: var(--teal2);
+    }
+
+    /* ═══════════════ PLATFORMS SECTION ═══════════════ */
+    .section-label {
+      text-align: center; position: relative; z-index: 1;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: fadeSlideUp 0.9s ease 0.6s both;
+    }
+
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+      margin-bottom: 3.5rem;
+      animation: fadeSlideUp 0.9s ease 0.7s both;
+    }
+
+    @media (max-width: 580px) { .platforms-grid { grid-template-columns: 1fr; } }
+
+    /* ═══════════════ PLATFORM CARD ═══════════════ */
+    .platform-card {
+      position: relative;
+      border-radius: 22px;
+      padding: 2rem 1.8rem 1.8rem;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(.22,.97,.57,.96), box-shadow 0.35s ease;
+      text-decoration: none; display: block;
+    }
+
+    .platform-card:hover {
+      transform: translateY(-8px) scale(1.01);
+    }
+
+    /* Card 1 – ارتقِ */
+    .card-arteqi {
+      background: linear-gradient(145deg, #0F2944 0%, #0B1F35 100%);
+      border: 1px solid rgba(20,160,158,0.3);
+      box-shadow: 0 20px 60px rgba(15,113,115,0.2), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .card-arteqi:hover { box-shadow: 0 30px 80px rgba(15,113,115,0.35), inset 0 1px 0 rgba(255,255,255,0.1); }
+
+    .card-arteqi .card-glow {
+      position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+      width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(20,160,158,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Card 2 – لغتي */
+    .card-lughati {
+      background: linear-gradient(145deg, #2A1A08 0%, #1C1106 100%);
+      border: 1px solid rgba(201,146,42,0.3);
+      box-shadow: 0 20px 60px rgba(201,146,42,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .card-lughati:hover { box-shadow: 0 30px 80px rgba(201,146,42,0.28), inset 0 1px 0 rgba(255,255,255,0.1); }
+
+    .card-lughati .card-glow {
+      position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+      width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,146,42,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Card inner */
+    .card-icon-wrap {
+      width: 64px; height: 64px; border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.2rem; position: relative; z-index: 1;
+    }
+    .card-arteqi  .card-icon-wrap { background: rgba(20,160,158,0.15); border: 1px solid rgba(20,160,158,0.35); }
+    .card-lughati .card-icon-wrap { background: rgba(201,146,42,0.15); border: 1px solid rgba(201,146,42,0.35); }
+
+    .card-icon-wrap svg { width: 34px; height: 34px; }
+    .card-arteqi  .card-icon-wrap svg { fill: var(--teal2); }
+    .card-lughati .card-icon-wrap svg { fill: var(--gold2); }
+
+    .card-number {
+      position: absolute; top: 1.4rem; left: 1.6rem;
+      font-family: 'Amiri', serif; font-size: 5rem; font-weight: 700;
+      line-height: 1; opacity: 0.07; pointer-events: none;
+      z-index: 0;
+    }
+    .card-arteqi  .card-number { color: var(--teal2); }
+    .card-lughati .card-number { color: var(--gold2); }
+
+    .card-name {
+      position: relative; z-index: 1;
+      font-family: 'Amiri', serif; font-size: 1.9rem; font-weight: 700;
+      line-height: 1.2; margin-bottom: 0.5rem;
+    }
+    .card-arteqi  .card-name { color: var(--teal2); }
+    .card-lughati .card-name { color: var(--gold2); }
+
+    .card-desc {
+      position: relative; z-index: 1;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.9rem; line-height: 1.9;
+      color: rgba(255,255,255,0.6); margin-bottom: 1.5rem;
+    }
+
+    .card-features {
+      position: relative; z-index: 1;
+      display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1.6rem;
+    }
+
+    .card-feat {
+      font-size: 0.72rem; font-weight: 600;
+      padding: 0.22rem 0.7rem; border-radius: 50px;
+    }
+    .card-arteqi  .card-feat { background: rgba(20,160,158,0.15); color: var(--teal2); border: 1px solid rgba(20,160,158,0.25); }
+    .card-lughati .card-feat { background: rgba(201,146,42,0.12); color: var(--gold2); border: 1px solid rgba(201,146,42,0.25); }
+
+    .card-btn {
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: 'Cairo', sans-serif; font-size: 0.88rem; font-weight: 700;
+      padding: 0.7rem 1.5rem; border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+    .card-arteqi  .card-btn { background: linear-gradient(135deg, var(--teal) 0%, var(--teal2) 100%); color: #fff; }
+    .card-lughati .card-btn { background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%); color: #1a1000; }
+    .card-btn:hover { filter: brightness(1.12); transform: scale(1.04); }
+
+    .btn-arrow { font-size: 1rem; line-height: 1; transition: transform 0.3s; }
+    .platform-card:hover .btn-arrow { transform: translateX(-5px); }
+
+    /* ═══════════════ STATS ROW ═══════════════ */
+    .stats-row {
+      display: flex; gap: 0; position: relative; z-index: 1;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px; overflow: hidden;
+      margin-bottom: 2.5rem;
+      animation: fadeSlideUp 0.9s ease 0.85s both;
+    }
+
+    .stat-item {
+      flex: 1; padding: 1.5rem 1rem;
+      text-align: center; position: relative;
+    }
+
+    .stat-item:not(:last-child)::after {
+      content: ''; position: absolute;
+      top: 20%; bottom: 20%; left: 0;
+      width: 1px; background: rgba(255,255,255,0.1);
+    }
+
+    .stat-num {
+      font-family: 'Amiri', serif; font-size: 2rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--gold2), var(--teal2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.75rem; font-weight: 400;
+      color: rgba(255,255,255,0.4); margin-top: 0.3rem;
+    }
+
+    /* ═══════════════ FOOTER ═══════════════ */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 2rem 1.5rem 3rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      animation: fadeSlideUp 0.9s ease 1s both;
+    }
+
+    .footer-name {
+      font-family: 'Amiri', serif; font-size: 1.3rem; font-weight: 700;
+      color: var(--gold2); margin-bottom: 0.3rem;
+    }
+
+    .footer-school {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.85rem; color: rgba(255,255,255,0.4);
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .footer-link {
+      font-family: 'Cairo', sans-serif; font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none; padding: 0.3rem 0.8rem;
+      border-radius: 50px; border: 1px solid rgba(255,255,255,0.12);
+      transition: all 0.25s;
+    }
+    .footer-link:hover { color: var(--gold2); border-color: rgba(201,146,42,0.4); background: rgba(201,146,42,0.08); }
+
+    .copy {
+      font-family: 'Tajawal', sans-serif; font-size: 0.75rem;
+      color: rgba(255,255,255,0.2); margin-top: 1.5rem;
+    }
+
+    /* ═══════════════ ANIMATIONS ═══════════════ */
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════ RESPONSIVE ═══════════════ */
+    @media (max-width: 480px) {
+      .about-card { padding: 1.6rem 1.3rem; }
+      .platform-card { padding: 1.6rem 1.4rem 1.4rem; }
+      .stats-row { flex-wrap: wrap; }
+      .stat-item { min-width: 50%; }
+      .stat-item:nth-child(2)::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <div class="container" style="display:flex;flex-direction:column;align-items:center;">
+
+      <div class="badge">الصف الخامس الأساسي &nbsp;·&nbsp; الفصل الدراسي الثاني &nbsp;·&nbsp; 2025/2026</div>
+
+      <!-- Logo icon -->
+      <div class="hero-logo">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <!-- Book with star -->
+          <path d="M12 2L13.7 7.4H19.4L14.8 10.6L16.5 16L12 12.8L7.5 16L9.2 10.6L4.6 7.4H10.3L12 2Z"/>
+          <path d="M3 19C5.5 17.5 8.5 17 12 17C15.5 17 18.5 17.5 21 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="fill:none;stroke:#C9922A;stroke-width:1.5;stroke-linecap:round"/>
+          <path d="M3 22C5.5 20.5 8.5 20 12 20C15.5 20 18.5 20.5 21 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="fill:none;stroke:#C9922A;stroke-width:1.5;stroke-linecap:round;opacity:0.5"/>
+        </svg>
+      </div>
+
+      <h1 class="hero-title">منصة ارتقِ</h1>
+      <p class="hero-sub">بوابتك نحو التميز في اللغة العربية</p>
+
+      <div class="ornament">
+        <div class="ornament-line"></div>
+        <div class="ornament-diamond"></div>
+        <div class="ornament-text">تعلّم · استكشف · ارتقِ</div>
+        <div class="ornament-diamond"></div>
+        <div class="ornament-line"></div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ═══ MAIN ═══ -->
+  <main>
+    <div class="container">
+
+      <!-- About -->
+      <div class="about-card">
+        <div class="about-title">نبذة عن المنصة</div>
+        <p class="about-text">
+          منصة ارتقِ هي بيئة تعليمية متكاملة مُصمَّمة لطلبة الصف الخامس الأساسي، تجمع بين الشرح التفاعلي والتعلم الممتع في مادة اللغة العربية. تضم المنصة مشروعين تعليميين متكاملين؛ الأول للشروحات التفاعلية والألعاب التعليمية التي تُعزّز الفهم وتُرسّخ المعلومات بأسلوب شيّق، والثاني للشروحات المرئية التي تُقدّم دروس النحو والإملاء بصورة مبسّطة وواضحة. يغطي المحتوى النصوصَ الأدبيةَ والقواعدَ النحويةَ وقواعدَ الإملاء وعلاماتِ الترقيم وفق المنهج العُماني.
+        </p>
+        <div class="about-highlights">
+          <span class="highlight-tag">✦ شروحات تفاعلية</span>
+          <span class="highlight-tag">✦ ألعاب تعليمية</span>
+          <span class="highlight-tag">✦ فيديوهات شرح</span>
+          <span class="highlight-tag">✦ تدريبات متنوعة</span>
+          <span class="highlight-tag">✦ منهج عُماني</span>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-num">٧+</div>
+          <div class="stat-label">ألعاب تفاعلية</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">٣</div>
+          <div class="stat-label">محاور تعليمية</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">١٠+</div>
+          <div class="stat-label">دروس نحو وإملاء</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">٢</div>
+          <div class="stat-label">فصلان دراسيان</div>
+        </div>
+      </div>
+
+      <!-- Section label -->
+      <div class="section-label">اختر منصتك التعليمية</div>
+
+      <!-- Platform Cards -->
+      <div class="platforms-grid">
+
+        <!-- Card 1: ارتقِ -->
+        <a class="platform-card card-arteqi" href="https://omk811.github.io/Semester2/" target="_blank" rel="noopener">
+          <div class="card-glow"></div>
+          <div class="card-number">١</div>
+
+          <div class="card-icon-wrap">
+            <!-- Gamepad / interactive icon -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 11H8M7 10V12M17 11H17.01M14.5 11H14.51M15.5 3.5C15.5 2.67 16.17 2 17 2S18.5 2.67 18.5 3.5C18.5 4.33 17.83 5 17 5C16.17 5 15.5 4.33 15.5 3.5ZM16.5 5H17.5C19.7 5 21.5 6.8 21.5 9V16C21.5 18.2 19.7 20 17.5 20H6.5C4.3 20 2.5 18.2 2.5 16V9C2.5 6.8 4.3 5 6.5 5H7.5"/>
+            </svg>
+          </div>
+
+          <div class="card-name">منصة ارتقِ</div>
+          <p class="card-desc">
+            شروحات تفاعلية وألعاب تعليمية ممتعة على دروس النحو والإملاء والنصوص الأدبية للفصل الثاني.
+          </p>
+
+          <div class="card-features">
+            <span class="card-feat">ألعاب تعليمية</span>
+            <span class="card-feat">تدريبات تفاعلية</span>
+            <span class="card-feat">نصوص أدبية</span>
+            <span class="card-feat">إملاء وترقيم</span>
+          </div>
+
+          <div class="card-btn">
+            <span>زيارة المنصة</span>
+            <span class="btn-arrow">←</span>
+          </div>
+        </a>
+
+        <!-- Card 2: لغتي -->
+        <a class="platform-card card-lughati" href="https://omk811.github.io/test1/" target="_blank" rel="noopener">
+          <div class="card-glow"></div>
+          <div class="card-number">٢</div>
+
+          <div class="card-icon-wrap">
+            <!-- Video / play icon -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 10.5L19.5 8.25C20.05 7.97 20.5 8.35 20.5 8.97V15.03C20.5 15.65 20.05 16.03 19.5 15.75L15 13.5V10.5ZM3.5 8C3.5 7.17 4.17 6.5 5 6.5H14C14.83 6.5 15.5 7.17 15.5 8V16C15.5 16.83 14.83 17.5 14 17.5H5C4.17 17.5 3.5 16.83 3.5 16V8Z"/>
+            </svg>
+          </div>
+
+          <div class="card-name">منصة لغتي</div>
+          <p class="card-desc">
+            شروحات مرئية بالفيديو لدروس النحو والإملاء للفصلين الأول والثاني بأسلوب واضح ومبسّط.
+          </p>
+
+          <div class="card-features">
+            <span class="card-feat">شروح مرئية</span>
+            <span class="card-feat">فصل أول وثاني</span>
+            <span class="card-feat">نحو وصرف</span>
+            <span class="card-feat">إملاء</span>
+          </div>
+
+          <div class="card-btn">
+            <span>زيارة المنصة</span>
+            <span class="btn-arrow">←</span>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="container">
+      <div class="footer-name">الأستاذ خليل البلوشي</div>
+      <div class="footer-school">مدرسة سعد بن معاذ للتعليم الأساسي &nbsp;·&nbsp; سلطنة عُمان</div>
+      <div class="footer-links">
+        <a class="footer-link" href="https://youtube.com/@teacherKhalil811" target="_blank" rel="noopener">▶ قناة يوتيوب</a>
+        <a class="footer-link" href="https://omk811.blogspot.com" target="_blank" rel="noopener">✦ المدونة</a>
+      </div>
+      <p class="copy">جميع الحقوق محفوظة © 2025/2026</p>
+    </div>
+  </footer>
+
+</body>
+</html>
